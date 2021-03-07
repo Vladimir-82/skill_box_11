@@ -22,32 +22,33 @@ def get_prime_numbers(n):
 # Распечатать все простые числа до 10000 в столбик
 
 
-class PrimeNumbers:
-    def __init__(self, n):
-        self.n = n
-        self.i = 0
-
-    def __iter__(self):
-        self.i = 0
-        return self
-
-    def __next__(self, n):
-
-        prime_numbers = []
-
-        for number in range(2, n + 1):
-            for prime in prime_numbers:
-                if number % prime == 0:
-                    break
-            else:
-                prime_numbers.append(number)
-                self.i += 1
-                return number
-
-
-prime_number_iterator = PrimeNumbers(n=10000)
-for number in prime_number_iterator:
-    print(number)
+# class PrimeNumbers:
+#     def __init__(self, n):
+#         self.n = n
+#         self.i = 0
+#
+#     def __iter__(self):
+#         self.i = 0
+#         return self
+#
+#     def __next__(self, n):
+#
+#         prime_numbers = []
+#
+#         for number in range(2, n + 1):
+#             for prime in prime_numbers:
+#                 if number % prime == 0:
+#                     break
+#             else:
+#                 prime_numbers.append(number)
+#                 self.i += 1
+#                 return number
+#
+#
+# prime_number_iterator = PrimeNumbers(n=10000)
+# print(prime_number_iterator)
+# for number in prime_number_iterator:
+#     print(number)
 
 # TODO после подтверждения части 1 преподователем, можно делать
 # Часть 2
@@ -55,13 +56,32 @@ for number in prime_number_iterator:
 # Распечатать все простые числа до 10000 в столбик
 
 
-# def prime_numbers_generator(n):
-#     pass
-#     # TODO здесь ваш код
-#
-#
-# for number in prime_numbers_generator(n=10000):
-#     print(number)
+def prime_numbers_generator(n):
+    prime_numbers = []
+    for number in range(2, n + 1):
+        for prime in prime_numbers:
+            if number % prime == 0:
+                break
+        else:
+            prime_numbers.append(number)
+            number = filter(happy(number), prime_numbers)
+            yield number
+
+def happy(arg):
+
+    if len(str(arg)) % 2 == 0:
+        half = len(str(arg)) // 2
+        if sum([int(i) for i in str(arg)[:half]]) == sum([int(i) for i in str(arg)[half:]]):
+            return arg
+
+
+simple = prime_numbers_generator(n=10000)
+
+for number in simple:
+    print(number)
+
+
+# print(9941 in prime_numbers_generator)
 
 
 # Часть 3
