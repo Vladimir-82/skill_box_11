@@ -64,21 +64,30 @@ def prime_numbers_generator(n):
                 break
         else:
             prime_numbers.append(number)
-            number = filter(happy(number), prime_numbers)
+            # number = happy(number)# фильтр счастливых чисел
+            number = polyndrom(number)# фильтр полиндромных чисел
             yield number
 
 def happy(arg):
+    half = len(str(arg)) // 2
+    if len(str(arg)) > 1:
+        if len(str(arg)) % 2 == 0:
+            if sum([int(i) for i in str(arg)[:half]]) == sum([int(i) for i in str(arg)[half:]]):
+                return arg
+        else:
+            if sum([int(i) for i in str(arg)[:half]]) == sum([int(i) for i in str(arg)[half + 1:]]):
+                return arg
 
-    if len(str(arg)) % 2 == 0:
-        half = len(str(arg)) // 2
-        if sum([int(i) for i in str(arg)[:half]]) == sum([int(i) for i in str(arg)[half:]]):
+def polyndrom(arg):
+    if len(str(arg)) > 1:
+        if str(arg) == str(arg)[::-1]:
             return arg
-
 
 simple = prime_numbers_generator(n=10000)
 
 for number in simple:
-    print(number)
+    if number != None:
+        print(number)
 
 
 # print(9941 in prime_numbers_generator)
