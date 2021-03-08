@@ -22,34 +22,37 @@ def get_prime_numbers(n):
 # Распечатать все простые числа до 10000 в столбик
 
 
-# class PrimeNumbers:
-#     def __init__(self, n):
-#         self.n = n
-#         self.i = 0
-#
-#     def __iter__(self):
-#         self.i = 0
-#         return self
-#
-#     def __next__(self, n):
-#
-#         prime_numbers = []
-#
-#         for number in range(2, n + 1):
-#             for prime in prime_numbers:
-#                 if number % prime == 0:
-#                     break
-#             else:
-#                 prime_numbers.append(number)
-#                 self.i += 1
-#                 return number
-#
-#
-# prime_number_iterator = PrimeNumbers(n=10000)
-# print(prime_number_iterator)
-# for number in prime_number_iterator:
-#     print(number)
+class PrimeNumbers:
+    def __init__(self, n):
+        self.n = n
+        self.i = 0
 
+    def __iter__(self):
+        self.i = 0
+        return self
+
+    def __next__(self):
+
+        prime_numbers = []
+        self.i += 1
+        if self.i > 1:
+            if self.i > self.n:
+                raise StopIteration()
+            for number in range(2, self.n + 1):
+                for prime in prime_numbers:
+                    if number % prime == 0:
+                        break
+                else:
+                    prime_numbers.append(number)
+
+                    return number
+
+
+prime_number_iterator = PrimeNumbers(n=13)
+print(prime_number_iterator)
+for number in prime_number_iterator:
+    print(number)
+print(7 in prime_number_iterator)
 # TODO после подтверждения части 1 преподователем, можно делать
 # Часть 2
 # Теперь нужно создать генератор, который выдает последовательность простых чисел до n
@@ -64,7 +67,7 @@ def prime_numbers_generator(n):
                 break
         else:
             prime_numbers.append(number)
-            # number = happy(number)# фильтр счастливых чисел
+            number = happy(number)# фильтр счастливых чисел
             number = polyndrom(number)# фильтр полиндромных чисел
             yield number
 
@@ -83,11 +86,11 @@ def polyndrom(arg):
         if str(arg) == str(arg)[::-1]:
             return arg
 
-simple = prime_numbers_generator(n=10000)
-
-for number in simple:
-    if number != None:
-        print(number)
+# simple = prime_numbers_generator(n=10000)
+# print(simple)
+# for number in simple:
+#     if number != None:
+#         print(number)
 
 
 # print(9941 in prime_numbers_generator)
