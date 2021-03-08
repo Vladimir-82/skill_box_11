@@ -12,22 +12,42 @@
 #
 # на консоли должно появится что-то вроде
 #
+#
+# file_name = 'events.txt'
+# file_exit='file_exit.txt'
+# file = open(file_name, mode='r', encoding='utf8')
+# file_exit = open(file_exit, mode='w', encoding='utf8')
+#
+# content_list = []
+#
+# for line in file.readlines():
+#     if 'NOK' in line:
+#         content = line[0:17:] + ']'
+#         content_list.append(content)
+#
+#
+# for content in sorted(set(content_list)):
+#     file_exit.write((content) + ' ' + str(content_list.count(content)))
+#     file_exit.write('\n')
+# file.close()
+# file_exit.close()
+
 
 file_name = 'events.txt'
-file_exit='file_exit.txt'
 file = open(file_name, mode='r', encoding='utf8')
-file_exit = open(file_exit, mode='w', encoding='utf8')
 
-content_list = []
+def gen_NOK():
+    content_list = []
+    for line in file.readlines():
+        if 'NOK' in line:
+            content = line[0:14:] + ']'
+            content_list.append(content)
+    for content in sorted(set(content_list)):
+       yield content + ' ' + str(content_list.count(content))
 
-for line in file.readlines():
-    if 'NOK' in line:
-        content = line[0:17:] + ']'
-        content_list.append(content)
+my_gen = gen_NOK()
+print(my_gen)
+for group_time in my_gen:
+    print(group_time)
 
-
-for content in sorted(set(content_list)):
-    file_exit.write((content) + ' ' + str(content_list.count(content)))
-    file_exit.write('\n')
 file.close()
-file_exit.close()
