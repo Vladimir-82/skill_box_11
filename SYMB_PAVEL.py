@@ -18,5 +18,5 @@ def is_true(string):
                 return False
     return True
 
-string = '({}[{}]()'
+string = '({}()[]'
 print(is_true(string))
